@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#c1e5e9">
+  <meta name="description" content="陪一只鹈鹕去兜风。可以自由旋转视角、缩放和调整速度的 3D 骑行小场景。">
+  <title>鹈鹕兜风 · Pelican Freewheel</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%231c5356'/%3E%3Ccircle cx='9' cy='22' r='5' fill='none' stroke='%23fff9e9' stroke-width='2'/%3E%3Ccircle cx='24' cy='22' r='5' fill='none' stroke='%23fff9e9' stroke-width='2'/%3E%3Cpath d='M9 22l6-11 9 11H9l6-8' fill='none' stroke='%23ff7346' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/OrbitControls.js"}}</script>
+</head>
+<body>
+  <main class="experience" id="experience">
+    <div class="viewport" id="viewport" aria-label="鹈鹕骑自行车的三维场景"></div>
+    <header class="masthead">
+      <div class="eyebrow"><span class="brand-mark">p.</span> PELICAN FREEWHEEL</div>
+      <h1>鹈鹕兜风<span class="title-dot">.</span></h1>
+      <p>今天，慢慢骑。</p>
+    </header>
+    <div class="scene-label"><span>01</span><span>海风小岛<br><small>SEASIDE CRUISE</small></span></div>
+    <nav class="view-switch" aria-label="选择观察视角">
+      <span class="control-label">换个角度</span>
+      <div class="view-buttons">
+        <button type="button" data-view="threeQuarter" aria-pressed="true">立体</button>
+        <button type="button" data-view="side" aria-pressed="false">侧面</button>
+        <button type="button" data-view="front" aria-pressed="false">正面</button>
+        <button type="button" data-view="top" aria-pressed="false">俯视</button>
+      </div>
+    </nav>
+    <div class="orbit-hint" id="orbit-hint"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16c-4-1-6-3-6-5s4-5 10-5 10 2 10 5-4 5-10 5H8m0 0 3-3m-3 3 3 3"/></svg><span>拖动旋转 · 滚轮缩放</span></div>
+    <section class="ride-controls" aria-label="动画控制">
+      <button class="play-button" id="play" type="button" aria-label="暂停骑行"><svg viewBox="0 0 24 24" aria-hidden="true" id="play-icon"><path d="M8 6v12M16 6v12"/></svg></button>
+      <div class="ride-status"><strong id="status-text">兜风中</strong><span>JUST KEEP PEDALING</span></div>
+      <div class="divider" aria-hidden="true"></div>
+      <label class="speed-control" for="speed"><span>骑行速度 <output id="speed-value" for="speed">1.0×</output></span><input id="speed" type="range" min="0.25" max="2" step="0.05" value="1" aria-label="骑行速度"></label>
+      <div class="divider secondary-divider" aria-hidden="true"></div>
+      <button class="subtle-button" type="button" id="orbit" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7a8 8 0 1 0 1 8M19 7V2m0 5h-5"/></svg><span>自动环绕</span></button>
+      <button class="icon-button" type="button" id="reset" aria-label="恢复默认视角" title="恢复默认视角"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10a8 8 0 1 1 2 8M4 10V4m0 6h6"/></svg></button>
+    </section>
+    <footer class="footnote"><span>TAKE THE SCENIC ROUTE</span><span class="keyboard-hint">空格 暂停 / 继续</span></footer>
+    <div class="loading" id="loading" role="status"><span class="loading-spinner"></span><p>鹈鹕正在戴好头盔…</p></div>
+    <div class="error-card" id="error-card" role="alert" hidden><h2>3D 场景暂时没能打开</h2><p id="error-message">请使用支持 WebGL 的浏览器，并开启硬件加速。</p><button type="button" onclick="location.reload()">重新打开</button></div>
+  </main>
+  <noscript>请启用 JavaScript 来查看和操作 3D 骑行动画。</noscript>
+  <script type="module">
+    import('./scene.js').catch((error) => {
+      console.error(error);
+      document.getElementById('loading').hidden = true;
+      document.getElementById('error-card').hidden = false;
+    });
+  </script>
+</body>
+</html>
